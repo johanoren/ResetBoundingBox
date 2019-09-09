@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"script",
+	"author":	"Johan Norén",
+	"description":	{
+		"":	"Resets unconstrained width of textboxes in active sketch "
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}
