@@ -9,7 +9,7 @@ _rowNumber = 0
 
 _handlers = []
 
-class NormalizeTextInputChangedHandler(adsk.core.InputChangedEventHandler):
+class ResetBoundingBoxInputChangedHandler(adsk.core.InputChangedEventHandler):
     def __init__(self):
         super().__init__()
     def notify(self,args):
@@ -22,7 +22,7 @@ class NormalizeTextInputChangedHandler(adsk.core.InputChangedEventHandler):
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
-class NormalizeTextExecuteHandler(adsk.core.CommandEventHandler):
+class ResetBoundingBoxExecuteHandler(adsk.core.CommandEventHandler):
     def __init__(self):
         super().__init__()
     def notify(self,args):
@@ -62,7 +62,7 @@ class NormalizeTextExecuteHandler(adsk.core.CommandEventHandler):
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
-class NormalizeTextCreatedHandler(adsk.core.CommandCreatedEventHandler):
+class ResetBoundingBoxCreatedHandler(adsk.core.CommandCreatedEventHandler):
     def __init__(self):
         super().__init__()
     def notify(self,args):
@@ -71,17 +71,17 @@ class NormalizeTextCreatedHandler(adsk.core.CommandCreatedEventHandler):
             cmd = adsk.core.Command.cast(args.command)
             
             # Connect destroyed event handler
-            onDestroy = NormalizeTextDestroyHandler()
+            onDestroy = ResetBoundingBoxDestroyHandler()
             cmd.destroy.add(onDestroy)
             _handlers.append(onDestroy)
 
             # Connect input changed event handler
-            onInputChanged = NormalizeTextInputChangedHandler()
+            onInputChanged = ResetBoundingBoxInputChangedHandler()
             cmd.inputChanged.add(onInputChanged)
             _handlers.append(onInputChanged)  
             
             # Connect execute handler
-            onExecute = NormalizeTextExecuteHandler()
+            onExecute = ResetBoundingBoxExecuteHandler()
             cmd.execute.add(onExecute)
             _handlers.append(onExecute)
             
@@ -94,7 +94,7 @@ class NormalizeTextCreatedHandler(adsk.core.CommandCreatedEventHandler):
         except:
             _ui.messageBox('Failed:\n{}'.format(traceback.format_exc()))
 
-class NormalizeTextDestroyHandler(adsk.core.CommandEventHandler):
+class ResetBoundingBoxDestroyHandler(adsk.core.CommandEventHandler):
     def __init__(self):
         super().__init__()
     def notify(self,args):
@@ -109,11 +109,11 @@ def run(context):
         _app = adsk.core.Application.get()
         _ui = _app.userInterface
         
-        cmdDef = _ui.commandDefinitions.itemById('cmdNormalizeText')
+        cmdDef = _ui.commandDefinitions.itemById('cmdResetBoundingBox')
         if not cmdDef:
-            cmdDef = _ui.commandDefinitions.addButtonDefinition('cmdNormalizeText', 'Command Normalize Text', 'Normalizes text in sketch.')
+            cmdDef = _ui.commandDefinitions.addButtonDefinition('cmdResetBoundingBox', 'Res Bounding Box', 'Resets bounding box for all text in sketch.')
     
-        onCommandCreated = NormalizeTextCreatedHandler()    
+        onCommandCreated = ResetBoundingBoxCreatedHandler()    
         cmdDef.commandCreated.add(onCommandCreated)
         _handlers.append(onCommandCreated)
         
